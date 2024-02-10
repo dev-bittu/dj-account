@@ -72,7 +72,11 @@ EXTERNAL_APPS = [
 
 INSTALLED_APPS += EXTERNAL_APPS
 ```
-4. Configure URLs to include the account app's URLs for registration, login, logout, etc. Add the following lines to your project's urls.py:
+4. Add authentication user model (append this in settings.py):
+```python
+AUTH_USER_MODEL = 'account.User'
+```
+5. Configure URLs to include the account app's URLs for registration, login, logout, etc. Add the following lines to your project's urls.py:
 ```python
 urlpatterns = [
     ...
@@ -80,12 +84,12 @@ urlpatterns = [
     ...
 ]
 ```
-5. Migrate database changes to create necessary tables for user management by running.
+6. Migrate database changes to create necessary tables for user management by running.
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
-6. Customize the templates and views as needed for your project specifics.
+7. Customize the templates and views as needed for your project specifics.
 
 ## Usage
 - Use the provided templates as they are or customize them to match your project's design.
