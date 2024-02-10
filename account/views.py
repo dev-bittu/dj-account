@@ -49,7 +49,7 @@ class Register(View):
             messages.warning(request, "Passwords do not match")
             return redirect("accounts:register")
         
-        email, username, firstname = data.get("email"), data.get("username"), data.get("firstname")
+        email, username, firstname = data.get("email").lower(), data.get("username"), data.get("firstname")
         if not (email and username and firstname):
             messages.info(request, "Email, username, and first name required")
             return redirect("accounts:register")
