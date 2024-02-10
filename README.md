@@ -56,7 +56,8 @@ cd mysite
 ```
 2. Clone the account app:
 ```bash
-git clone --depth 1 --filter=blob:path=account https://github.com/dev-bittu/dj-account account
+pip install github-clone
+ghclone https://github.com/dev-bittu/dj-account/tree/main/account
 ```
 3. Add the "account" app to your Django project's installed apps list in the settings.py file:
 ```python
