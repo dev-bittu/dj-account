@@ -6,9 +6,9 @@ This app provides features such as user registration, login, logout, password re
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Features](#features)
-3. [Technologies Used](#technologies-used)
-4. [Installation](#installation)
-5. [Usage](#usage)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Technologies Used](#technologies-used)
 6. [Contributing](#contributing)
 7. [License](#license)
 8. [Support](#support)
@@ -90,13 +90,22 @@ python manage.py migrate
 - Use the provided templates as they are or customize them to match your project's design.
 - Utilize the views and forms from the "account" app to implement user authentication features seamlessly.
 
+## Technologies Used:
+This project utilizes the following technologies:
+- HTML (Hypertext Markup Language): Used for creating the structure of web pages.
+- CSS (Cascading Style Sheets): Employed to style HTML elements and enhance visual presentation.
+- JavaScript: Used for adding interactivity and dynamic features to the web pages.
+- Python: A versatile and high-level programming language used for backend development.
+- Django: A high-level Python web framework for rapid development and clean design.
+These technologies combined enable the creation of a dynamic and interactive web application with user account management features.
+
 ## Contributing
 This app was developed by dev-bittu and contributions are welcome from the community.
 Feel free to submit issues and pull requests on GitHub.
 
 ## License
 This app is released under the MIT License.
-Refer to the LICENSE file for details.
+Refer to the [LICENSE](LICENSE) file for details.
 
 ## Support
 For any questions, bug reports, or feature requests, please contact us.
