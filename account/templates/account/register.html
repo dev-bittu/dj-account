@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block title %}Register - account{% endblock %}
+
+{% block body %}
+<div class="container mt-5 mb-5">
+  {% load static %}
+  <form method="post" action="{% url 'account:register' %}">
+    {% csrf_token %}
+    <h1 class="text-center">
+      Register
+    </h1>
+    <div class="mb-3">
+      <label for="username" class="form-label">
+        Username
+      </label>
+      <input type="text" class="form-control" id="username" name="username" placeholder="Username" aria-describedby="usernameHelp" required autofocus>
+      <ul class="usernameHelp">
+        <li class="form-text">Must be unique</li>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">
+        Email
+      </label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="mb-3">
+      <label for="password1" class="form-label">
+        Password
+      </label>
+      <input type="password" class="form-control" id="password1" name="password1" placeholder="Password" aria-describedby="passwordHelp" required>
+      <ul class="passwordHelp">
+        <li class="form-text">Min length should be 6</li>
+        <li class="form-text">One digit required</li>
+        <li class="form-text">One special character required</li>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <label for="password2" class="form-label">
+        Confirm Password
+      </label>
+      <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" required>
+    </div>
+    <button type="submit" class="btn btn-success w-100">Register</button>
+    <div class="mt-3">
+      <p>Already have account? <a href="{% url 'account:login' %}" class="text-decoration-none">Login</a></p>
+    </div>
+  </form>
+</div>
+{% endblock %}

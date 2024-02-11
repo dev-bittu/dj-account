@@ -13,7 +13,7 @@ class Login(View):
         if request.user.is_authenticated:
             messages.info(request, "You are already logged in, Logout first")
             return redirect("index")
-        return render(request, "accounts/login.html")
+        return render(request, "account/login.html")
 
     def post(self, request):
         uname = request.POST.get("username", "")
@@ -25,21 +25,21 @@ class Login(View):
             return redirect("index")
         else:
             messages.warning(request, "Username or password is incorrect")
-        return render(request, "accounts/login.html")
+        return render(request, "account/login.html")
 
 @method_decorator(login_required, name="dispatch")
 class Logout(View):
     def get(self, request):
         logout(request)
         messages.info(request, "Logged out")
-        return redirect("accounts:login")
+        return redirect("account:login")
 
 class Register(View):
     def get(self, request):
         if request.user.is_authenticated:
             messages.info(request, "You are already logged in")
             return redirect("index")
-        return render(request, "accounts/register.html")
+        return render(request, "account/register.html")
     
     def post(self, request):
         data = request.POST
@@ -47,12 +47,12 @@ class Register(View):
         passwd2 = data.get("password2","")
         if passwd1 and (passwd1 != passwd2):
             messages.warning(request, "Passwords do not match")
-            return redirect("accounts:register")
+            return redirect("account:register")
         
         email, username, firstname = data.get("email").lower(), data.get("username"), data.get("firstname")
         if not (email and username and firstname):
             messages.info(request, "Email, username, and first name required")
-            return redirect("accounts:register")
+            return redirect("account:register")
         
         user = User.objects.filter(Q(email=email) | Q(username=username))
         if not user.exists():
@@ -67,4 +67,11 @@ class Register(View):
             return redirect("index")
 
         messages.info(request, "User already exists")
-        return redirect("accounts:register")
+        return redirect("account:register")
+
+class VerifyEmail(View):
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        pass

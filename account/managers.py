@@ -11,6 +11,7 @@ class UserManager(BaseUserManager):
             raise ValueError(_('Users must have an username'))
         if email := extra_fields.get("email"):
             extra_fields["email"] = self.normalize_email(email)
+        extra_fields["is_verified"] = True
         user = self.model(username=username, **extra_fields)
         user.set_password(password)
         user.save()

@@ -68,6 +68,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'mysite.context_processors.site_settings',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -142,3 +143,12 @@ EMAIL_PORT = environ.get('EMAIL_PORT', 587)
 EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD')
 
+SITE_SETTINGS = {
+    'email': {
+        'confirm_expire_in': '10',  # in minutes
+        'otp_length': 6
+    },
+    'site': {
+        'SITE_NAME': 'mysite',
+    }
+}
