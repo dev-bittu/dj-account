@@ -12,7 +12,7 @@ setup:
 	@make migrate
 	@make superuser
 
-runserver:
+run:
 	python manage.py runserver
 
 test:
