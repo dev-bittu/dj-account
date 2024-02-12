@@ -77,7 +77,7 @@ class VerifyEmail(View):
         return redirect("account:login")
 
     def post(self, request):
-        if (otp := request.POST.get("otp")) and otp.isdigit():
+        if (otp := request.POST.get("otp")) and otp.isdigit() and len(otp) == 6:
             if cnfm := ConfirmEmail.objects.filter(user=request.user).first():
                 if int(otp) == cnfm.otp:
                     if cnfm.is_expired():
