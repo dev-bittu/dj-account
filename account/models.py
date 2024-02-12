@@ -21,6 +21,7 @@ class ConfirmEmail(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     otp = models.IntegerField()
     user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+    attempts = models.IntegerField(default=0)
 
     def is_expired(self):
         return now() > self.created_at+timedelta(days=settings.SITE_SETTINGS['email'].get('otp_expire_in', 10))

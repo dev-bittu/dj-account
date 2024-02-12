@@ -79,6 +79,12 @@ class VerifyEmail(View):
     def post(self, request):
         if (otp := request.POST.get("otp")) and otp.isdigit() and len(otp) == 6:
             if cnfm := ConfirmEmail.objects.filter(user=request.user).first():
+                cnfm.attempts = cnfm.attempts + 1
+                cnfm.save()
+                if cnfm.attempts > 5:
+                    messages.warning(request, "You are already complete maximum attempts. Create new OTP")
+                    cnfm.delete()
+                    return redirect("account:send_verification_otp")
                 if int(otp) == cnfm.otp:
                     if cnfm.is_expired():
                         cnfm.delete()
