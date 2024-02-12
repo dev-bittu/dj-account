@@ -93,6 +93,10 @@ class VerifyEmail(View):
 
 class SendVerificationOtp(View):
     def get(self, request):
-        email_verification_mail(request.user)
-        messages.info(request, "OTP is send to your email. Check spam golder if it didn't appears")
-        return redirect("account:verify_email")
+        if request.user.is_authenticated and not request.user.is_verified:
+            email_verification_mail(request.user)
+            messages.info(request, "OTP is send to your email. Check spam golder if it didn't appears")
+            return redirect("account:verify_email")
+        else:
+            messages.warning(request, "Your account is already verified")
+            return redirect("index")
