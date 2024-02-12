@@ -81,6 +81,10 @@ class VerifyEmail(View):
         if (otp := request.POST.get("otp")) and otp.isdigit():
             if cnfm := ConfirmEmail.objects.filter(user=request.user).first():
                 if int(otp) == cnfm.otp:
+                    if cnfm.is_expired():
+                        cnfm.delete()
+                        messages.info(request, "OTP is expired. We have just send you a new OTP")
+                        return redirect("account:send_verification_otp")
                     request.user.is_verified = True
                     request.user.save()
                     messages.success(request, "Successfully verified email")
