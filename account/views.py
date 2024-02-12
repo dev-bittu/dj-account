@@ -63,7 +63,6 @@ class Register(View):
             user = User(email=email, username=username)
             user.set_password(passwd1)
             user.save()
-            messages.success(request, "OTP is send to your email. Check spam folder if it didn't appears")
             login(request, user)
             return redirect("account:send_verification_otp")
 
