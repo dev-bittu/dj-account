@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container mt-5 mb-5">
+  <form action="{% url 'account:verify_email' %}" method="post">
+    {% csrf_token %}
+    <h1 class="text-center">
+      Verify OTP
+    </h1>
+    <div class="row mb-2 form-floating">
+      <input type="number" class="form-control" id="otp" name="otp" placeholder="OTP" min="100000" max="999999" title="Please enter exactly 6 digits" required autofocus>
+      <label for="otp">OTP</label>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <a href="{% url 'account:send_verification_otp' %}" class="text-decoration-none">Resend OTP</a>
+      </div>
+      <div class"col-6">
+        <button type="submit" class="btn btn-primary float-end">Verify</button>
+      </div>
+  </form>
+</div>
+{% endblock %}
