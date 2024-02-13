@@ -12,12 +12,13 @@
       <label for="otp">OTP</label>
     </div>
     <div class="row">
-      <div class="col-6">
-        <a href="{% url 'account:send_verification_otp' %}" class="text-decoration-none">Resend OTP</a>
+      <div class="col">
+        <button type="submit" class="btn btn-outline-primary float-end">Verify</button>
       </div>
-      <div class"col-6">
-        <button type="submit" class="btn btn-primary float-end">Verify</button>
-      </div>
+    </div>
+    <div class="row">
+      <a href="{% url 'account:send_verification_otp' %}" class="text-decoration-none">Resend OTP</a>
+    </div>
   </form>
 </div>
 {% endblock %}
