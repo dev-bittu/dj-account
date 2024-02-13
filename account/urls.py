@@ -10,4 +10,6 @@ urlpatterns = [
 
     path("verify/", views.VerifyEmail.as_view(), name="verify_email"),
     path("verify/send-otp/", views.SendVerificationOtp.as_view(), name="send_verification_otp"),
+
+    path("forget-password/", views.ForgetPassword.as_view(), name="forget_password"),
 ]

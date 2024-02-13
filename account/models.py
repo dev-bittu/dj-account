@@ -1,3 +1,4 @@
+from asyncio import timeout
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext as _
@@ -24,4 +25,12 @@ class ConfirmEmail(models.Model):
     attempts = models.IntegerField(default=0)
 
     def is_expired(self):
-        return now() > self.created_at+timedelta(days=settings.SITE_SETTINGS['email'].get('otp_expire_in', 10))
+        return now() > self.created_at+timedelta(days=settings.SITE_SETTINGS['email'].get('expire_in', 10))
+
+class PasswordReset(models.Model):
+    created_at = models.DateTimeField(auto_now=True)
+    token = models.UUIDField()
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+    
+    def is_expired(self):
+        return now() > self.created_at+timeout(days=settings.SITE_SETTINGS['email'].get('expire_in', 10))

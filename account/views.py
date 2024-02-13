@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from mysite.decorators import login_required
 from django.db.models import Q, F
-from .mail import email_verification_mail
+from .mail import email_verification_mail, reset_password_mail
 from .models import User, ConfirmEmail
 
 
@@ -136,3 +136,16 @@ class SendVerificationOtp(View):
         else:
             messages.warning(request, "Your account is already verified")
             return redirect("index")
+
+class ForgetPassword(View):
+    def get(self, request):
+        return render(request, "account/forget_password.html")
+
+    def post(self, request):
+        if email := request.POST.get("email"):
+            if user := User.objects.filter(email=email).first():
+                reset_password_mail(user)
+                messages.success(request, "Password Reset Link send to your email. Check spam folder folder if it not appearsrs.")
+            else:
+                messages.warning(request, "No such user exists with the given email")
+        return redirect("account:forget_password")
