@@ -4,8 +4,17 @@ from random import randint
 from .models import ConfirmEmail
 
 def email_verification_mail(user):
+    """Send email verification otp to complete registration
+    Parameters:
+        user: request.user
+    Returns:
+        delivered: int - 1 if delivered else 0
+    """
+
+    # Generate a random OTP (One Time Password) for email verification
     otp = randint(100000, 999999)
 
+    # Prepare email subject and content
     subject = "Account Verification OTP for Registration"
     content = f"Dear {user.username},\n" \
                 "Thank you for registering on our website." \
@@ -18,9 +27,13 @@ def email_verification_mail(user):
                 "Best regards,\n" \
                 f"{settings.SITE_SETTINGS['site']['SITE_NAME'].title()} Team"
 
+    # Check if there is an existing ConfirmEmail object for the user, delete it if it exists
     if cnfm := ConfirmEmail.objects.filter(user=user).first():
         cnfm.delete()
+
+    # Create a new ConfirmEmail object for the current user with the generated OTP
     cnfm = ConfirmEmail(user=user, otp=otp)
     cnfm.save()
 
+    # Send the verification email using Django's send_mail function
     return send_mail(subject, content, settings.EMAIL_HOST_USER, [user.email], fail_silently = not settings.DEBUG)
