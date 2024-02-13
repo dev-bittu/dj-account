@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 from django.conf import settings
 from django.utils.timezone import now
 from datetime import timedelta
+import uuid
 from .managers import UserManager
 
 class User(AbstractUser):
@@ -29,7 +30,7 @@ class ConfirmEmail(models.Model):
 
 class PasswordReset(models.Model):
     created_at = models.DateTimeField(auto_now=True)
-    token = models.UUIDField()
+    token = models.UUIDField(default=uuid.uuid4)
     user = models.OneToOneField(to=User, on_delete=models.CASCADE)
     
     def is_expired(self):

@@ -145,7 +145,7 @@ EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD')
 
 SITE_SETTINGS = {
     'email': {
-        'expire_in': '10',  # in minutes
+        'expire_in': 10,  # in minutes
         'otp_length': 6
     },
     'site': {

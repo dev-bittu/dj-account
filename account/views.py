@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from mysite.decorators import login_required
 from django.db.models import Q, F
 from .mail import email_verification_mail, reset_password_mail
-from .models import User, ConfirmEmail
+from .models import User, ConfirmEmail, PasswordReset
 
 
 class Login(View):
@@ -102,6 +102,7 @@ class VerifyEmail(View):
                 # imcrement attempts by one
                 cnfm.attempts = F("attempts") + 1
                 cnfm.save()
+                cnfm.refresh_from_db()
 
                 # if already attempts 5 times, delete old otp and send new one
                 if cnfm.attempts > 5:
@@ -149,3 +150,9 @@ class ForgetPassword(View):
             else:
                 messages.warning(request, "No such user exists with the given email")
         return redirect("account:forget_password")
+
+class ResetPassword(View):
+    def get(self, request, id, token):
+        if pswdrst := PasswordReset.objects.filter(user=User.objects.get(id=id), token=token).first():
+            pass  # render set password template
+        return redirect("account:login")

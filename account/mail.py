@@ -40,18 +40,17 @@ def email_verification_mail(user):
     return send_mail(subject, content, settings.EMAIL_HOST_USER, [user.email], fail_silently = not settings.DEBUG)
 
 def reset_password_mail(user):
+    if pswdrst := PasswordReset.objects.filter(user=user).first():
+        pswdrst.delete()
+    pswdrst = PasswordReset(user=user)
+    pswdrst.save()
+
     subject = "Reset Your Password - Action Required"
     content = f"Dear {user.username},\n" \
                 "We have received a request to reset your password. To proceed with resetting your password, please click on the link below:\n\n" \
-                f"Reset Password Link: {settings.SITE_SETTINGS['site']['SITE_LINK']}{reverse('account:password_reset_confirm')}\n\n" \
+                f"Reset Password Link: {settings.SITE_SETTINGS['site']['SITE_LINK']}{reverse('account:reset_password', args=[user.id, pswdrst.token])}\n\n" \
                 "If you did not request this password reset, please ignore this email. Your current password will remain unchanged.\n\n" \
                 "Thank you,\n" \
                 f"{settings.SITE_SETTINGS['site']['SITE_NAME'].title()} Team"
     
-    if pswdrst := PasswordReset.objects.filter(user=user).first():
-        pswdrst.delete()
-
-    pswdrst = PasswordReset(user=user)
-    pswdrst.save()
-
     return send_mail(subject, content, settings.EMAIL_HOST_USER, [user.email], fail_silently = not settings.DEBUG)
